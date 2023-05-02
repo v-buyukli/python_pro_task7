@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Teachers</title>
+</head>
+<body>
+List of teachers: <br><br>
+
+{% for teacher in teachers_list %}
+{{ teacher.first_name }} {{ teacher.last_name }}, age: {{ teacher.age }} <br>
+{% endfor %}
+</body>
+</html>

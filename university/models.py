@@ -9,6 +9,9 @@ class Teacher(models.Model):
     class Meta:
         ordering = ["first_name"]
 
+    def __str__(self):
+        return f"{self.first_name} {self.last_name}"
+
 
 class Student(models.Model):
     first_name = models.CharField(max_length=100)
@@ -18,6 +21,9 @@ class Student(models.Model):
     class Meta:
         ordering = ["first_name"]
 
+    def __str__(self):
+        return f"{self.first_name} {self.last_name}"
+
 
 class Group(models.Model):
     group_name = models.CharField(max_length=100)
@@ -26,3 +32,6 @@ class Group(models.Model):
 
     class Meta:
         ordering = ["group_name"]
+
+    def __str__(self):
+        return self.group_name

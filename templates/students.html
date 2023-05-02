@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Students</title>
+</head>
+<body>
+List of students: <br><br>
+
+{% for student in students_list %}
+{{ student.first_name }} {{ student.last_name }}, age: {{ student.age }} <br>
+{% endfor %}
+</body>
+</html>

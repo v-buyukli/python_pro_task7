@@ -1,0 +1,8 @@
+Teacher editing: <br><br>
+
+<form method="post" action="{% url 'teacher_view' form.instance.id %}">
+    {% csrf_token %}
+    {{ form }}
+    <input type="submit" name="edit" value="Edit">
+    <input type="submit" name="delete" value="Delete">
+</form>
