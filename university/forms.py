@@ -1,6 +1,6 @@
 from django import forms
-
 from django.core.exceptions import ValidationError
+
 from university.models import Student, Teacher, Group
 
 

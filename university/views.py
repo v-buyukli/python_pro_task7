@@ -1,4 +1,4 @@
-from django.http import HttpResponseRedirect, HttpResponse
+from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 
@@ -17,35 +17,29 @@ def student_view(request, student_id):
     except Student.DoesNotExist:
         return HttpResponseRedirect(reverse("index"))
 
-    if request.method == "GET":
-        form = StudentForm(instance=student)
-        return render(request, "student.html", {"form": form})
-
-    elif request.method == "POST":
+    if request.method == "POST":
         form = StudentForm(request.POST, instance=student)
-
-        if not form.is_valid():
-            return HttpResponse("The Student could not be created because the data didn't validate")
-
-        if "edit" in request.POST:
-            form.save()
-            return render(request, "student.html", {"form": form})
-        elif "delete" in request.POST:
-            student.delete()
-            return HttpResponseRedirect(reverse("students"))
+        if form.is_valid():
+            if "edit" in request.POST:
+                form.save()
+                return render(request, "student.html", {"form": form})
+            elif "delete" in request.POST:
+                student.delete()
+                return HttpResponseRedirect(reverse("students"))
+    else:
+        form = StudentForm(instance=student)
+    return render(request, "student.html", {"form": form})
 
 
 def new_student(request):
-    if request.method == "GET":
-        form = StudentForm()
-        return render(request, "new_student.html", {"form": form})
-
-    elif request.method == "POST":
+    if request.method == "POST":
         form = StudentForm(request.POST)
-        if not form.is_valid():
-            return HttpResponse("The Student could not be created because the data didn't validate")
-        form.save()
-        return HttpResponseRedirect(reverse("student_view", args=[form.instance.id]))
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse("student_view", args=[form.instance.id]))
+    else:
+        form = StudentForm()
+    return render(request, "new_student.html", {"form": form})
 
 
 def students(request):
@@ -59,35 +53,29 @@ def teacher_view(request, teacher_id):
     except Teacher.DoesNotExist:
         return HttpResponseRedirect(reverse("index"))
 
-    if request.method == "GET":
-        form = TeacherForm(instance=teacher)
-        return render(request, "teacher.html", {"form": form})
-
-    elif request.method == "POST":
+    if request.method == "POST":
         form = TeacherForm(request.POST, instance=teacher)
-
-        if not form.is_valid():
-            return HttpResponse("The Teacher could not be created because the data didn't validate")
-
-        if "edit" in request.POST:
-            form.save()
-            return render(request, "teacher.html", {"form": form})
-        elif "delete" in request.POST:
-            teacher.delete()
-            return HttpResponseRedirect(reverse("teachers"))
+        if form.is_valid():
+            if "edit" in request.POST:
+                form.save()
+                return render(request, "teacher.html", {"form": form})
+            elif "delete" in request.POST:
+                teacher.delete()
+                return HttpResponseRedirect(reverse("teachers"))
+    else:
+        form = TeacherForm(instance=teacher)
+    return render(request, "teacher.html", {"form": form})
 
 
 def new_teacher(request):
-    if request.method == "GET":
-        form = TeacherForm()
-        return render(request, "new_teacher.html", {"form": form})
-
-    elif request.method == "POST":
+    if request.method == "POST":
         form = TeacherForm(request.POST)
-        if not form.is_valid():
-            return HttpResponse("The Teacher could not be created because the data didn't validate")
-        form.save()
-        return HttpResponseRedirect(reverse("teacher_view", args=[form.instance.id]))
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse("teacher_view", args=[form.instance.id]))
+    else:
+        form = TeacherForm()
+    return render(request, "new_teacher.html", {"form": form})
 
 
 def teachers(request):
