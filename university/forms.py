@@ -1,6 +1,8 @@
 from django import forms
 from django.core.exceptions import ValidationError
 
+import phonenumbers
+
 from university.models import Student, Teacher, Group
 
 
@@ -11,7 +13,7 @@ def check_digits(string):
 class StudentForm(forms.ModelForm):
     class Meta:
         model = Student
-        fields = ["first_name", "last_name", "age"]
+        fields = ["first_name", "last_name", "age", "phone"]
 
     def clean_first_name(self):
         first_name = self.cleaned_data["first_name"]
@@ -30,6 +32,16 @@ class StudentForm(forms.ModelForm):
         if age < 16:
             raise ValidationError("The minimum age for student is 16 years...")
         return age
+
+    def clean_phone(self):
+        phone_raw = self.cleaned_data["phone"]
+        try:
+            phone = phonenumbers.parse(phone_raw, "UA")
+        except phonenumbers.NumberParseException:
+            raise ValidationError("Phone is invalid...")
+        if not phonenumbers.is_valid_number(phone):
+            raise ValidationError("Phone is invalid...")
+        return phonenumbers.format_number(phone, phonenumbers.PhoneNumberFormat.INTERNATIONAL)
 
 
 class TeacherForm(forms.ModelForm):
