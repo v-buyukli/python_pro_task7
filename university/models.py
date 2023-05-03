@@ -36,3 +36,9 @@ class Group(models.Model):
 
     def __str__(self):
         return self.group_name
+
+
+class RequestLog(models.Model):
+    path = models.CharField(max_length=200)
+    method = models.CharField(max_length=20)
+    execution_time = models.FloatField()
