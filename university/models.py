@@ -17,6 +17,7 @@ class Student(models.Model):
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
     age = models.PositiveIntegerField()
+    phone = models.CharField(max_length=100)
 
     class Meta:
         ordering = ["first_name"]
