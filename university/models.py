@@ -17,6 +17,7 @@ class Student(models.Model):
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
     age = models.PositiveIntegerField()
+    phone = models.CharField(max_length=100)
 
     class Meta:
         ordering = ["first_name"]
@@ -35,3 +36,9 @@ class Group(models.Model):
 
     def __str__(self):
         return self.group_name
+
+
+class RequestLog(models.Model):
+    path = models.CharField(max_length=200)
+    method = models.CharField(max_length=20)
+    execution_time = models.FloatField()
